@@ -1,0 +1,7 @@
+/src/frontend/node_modules
+/src/frontend/build
+/src/frontend/public
+
+
+/src/frontend/yarn.lock
+/src/frontend/package-lock.json

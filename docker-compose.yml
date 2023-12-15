@@ -1,0 +1,49 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: ./docker/frontend/Dockerfile
+    container_name: frontend
+    tty: true
+    volumes:
+      - ./app/frontend:/app/frontend
+    ports:
+      - 5173:5173
+    networks:
+      - tus-record
+  backend:
+    volumes:
+      - ./app/backend/:/app/backend
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    container_name: backend
+    ports:
+      - 8080:8080
+    tty: true
+    depends_on:
+      - db
+    networks:
+      - tus-record
+  db:
+    build:
+      context: .
+      dockerfile: ./docker/db/Dockerfile
+    container_name: db
+    environment:
+      - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASS}
+      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - TZ=${TZ}
+    ports:
+      - '3306:3306'
+    tty: true
+    networks:
+      - tus-record
+      
+networks:
+  tus-record:
+    external: true
