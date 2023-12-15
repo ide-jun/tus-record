@@ -15,15 +15,15 @@ type fruit struct {
 
 var fruits = []fruit{
 	{ID: 1, Name: "appleだよ", Icon: "🍎"},
-	{ID: 2, Name: "bananaだよ", Icon: "🍌"},
+	{ID: 2, Name: "bananaよ", Icon: "🍌"},
 	{ID: 3, Name: "grapeだよ", Icon: "🍇"},
 }
 
 func main() {
 	http.HandleFunc("/", echoHello)
 	http.HandleFunc("/fruit", getFruits)
-	fmt.Println("Starting server at port 8000")
-	log.Fatal(http.ListenAndServe(":8000", nil))
+	fmt.Println("Starting server at port 8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func echoHello(w http.ResponseWriter, r *http.Request) {
@@ -32,6 +32,6 @@ func echoHello(w http.ResponseWriter, r *http.Request) {
 
 func getFruits(w http.ResponseWriter, r *http.Request) {
 	// w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 	json.NewEncoder(w).Encode(fruits)
 }
