@@ -7,21 +7,15 @@ import (
 	"net/http"
 )
 
-type fruit struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
-	Icon string `json:"icon"`
-}
-
-var fruits = []fruit{
-	{ID: 1, Name: "appleだよ", Icon: "🍎"},
-	{ID: 2, Name: "bananaよ", Icon: "🍌"},
-	{ID: 3, Name: "grapeだよ", Icon: "🍇"},
+type SignIn struct {
+	Name     string `json:"name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 func main() {
 	http.HandleFunc("/", echoHello)
-	http.HandleFunc("/fruit", getFruits)
+	http.HandleFunc("/sign-in", createUser)
 	fmt.Println("Starting server at port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
@@ -30,8 +24,18 @@ func echoHello(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "<h1>Hello World</h1>")
 }
 
-func getFruits(w http.ResponseWriter, r *http.Request) {
-	// w.Header().Set("Content-Type", "application/json")
+func createUser(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
-	json.NewEncoder(w).Encode(fruits)
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	// w.Header().Set("Access-Control-Allow-Credentials", "true")
+	// w.Header().Set("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,UPDATE,OPTIONS")
+	// w.Header().Set("Content-Type", "application/json")
+
+	var signIn SignIn
+	if err := json.NewDecoder(r.Body).Decode(&signIn); err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("%#v\n", signIn)
 }
