@@ -10,6 +10,7 @@ services:
       - ./app/frontend:/app/frontend
     ports:
       - 5173:5173
+    command: sh -c 'npm start'
     networks:
       - tus-record
   backend:

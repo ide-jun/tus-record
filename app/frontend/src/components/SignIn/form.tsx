@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './sign-in-form.module.scss'
+import styles from './form.module.scss'
 
 interface SignInProps {
   onSubmit: (name: string, email: string, password: string) => void;
