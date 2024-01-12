@@ -1,10 +1,10 @@
 package api
 
 import (
+	"backend/config"
+	"backend/database"
 	"database/sql"
-	"time"
-
-	"github.com/go-sql-driver/mysql"
+	"log"
 )
 
 type API struct {
@@ -12,25 +12,15 @@ type API struct {
 }
 
 func (s *API) ConnectDB() {
-	jst, err := time.LoadLocation("Asia/Tokyo")
+	cfg, err := config.Get()
 	if err != nil {
-		// エラーハンドリング
-		return
+		log.Fatal(err)
 	}
-	c := mysql.Config{
-		DBName:    "tus-record",
-		User:      "amdin",
-		Passwd:    "pass",
-		Addr:      "db:3306",
-		Net:       "tcp",
-		ParseTime: true,
-		Collation: "utf8mb4_unicode_ci",
-		Loc:       jst,
-	}
-	db, err := sql.Open("mysql", c.FormatDSN())
+
+	db, err := database.Open(cfg.DBHost, cfg.DBPort, cfg.DBName, cfg.DBUsername, cfg.DBPassword)
 	if err != nil {
-		// エラーハンドリング
-		return
+		log.Fatal(err)
 	}
+	defer db.Close()
 	s.db = db
 }
