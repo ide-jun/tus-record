@@ -19,6 +19,17 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     container_name: backend
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=tus-record
+      - DB_NAME=tus-record
+      - DB_USERNAME=admin
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=3306
+      - TZ=Asia/Tokyo
     ports:
       - 8080:8080
     tty: true
@@ -34,9 +45,9 @@ services:
     environment:
       - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
       - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TZ=${TZ}
     ports:
       - '3306:3306'
