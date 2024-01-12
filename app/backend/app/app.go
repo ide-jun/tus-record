@@ -1,7 +1,6 @@
 package app
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
@@ -31,10 +30,6 @@ func (s *App) Handler() http.Handler {
 	r.Use(middleware.NoCache)
 
 	r.Mount("/", s.api.Handler())
-
-	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, world!")
-	})
 
 	return r
 }

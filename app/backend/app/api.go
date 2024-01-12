@@ -9,7 +9,6 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/go-chi/chi/v5/middleware"
 )
 
 // API API を表す構造体
@@ -35,11 +34,6 @@ func (s *API) Handler() http.Handler {
 	r := chi.NewRouter()
 
 	r.Use(s.middlewares...)
-	r.Use(
-		allowContentTypeMiddleware("application/json"),
-		middleware.RequestID,
-		middleware.SetHeader("Context-Type", "application/json"),
-	)
 
 	r.Post("/ping", s.pingHandler)
 

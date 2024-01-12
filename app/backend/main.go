@@ -13,6 +13,7 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 )
 
 const (
@@ -46,7 +47,14 @@ func main() {
 	api := app.NewAPI(clk, db)
 
 	srvApp := app.New(api)
-	r.Mount("/", srvApp.Handler())
+
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:5173"},
+		AllowedMethods:   []string{"GET", "POST", "DELETE"},
+		AllowCredentials: true,
+	})
+
+	r.Mount("/", c.Handler(srvApp.Handler()))
 
 	srv := &http.Server{
 		Handler:      r,
