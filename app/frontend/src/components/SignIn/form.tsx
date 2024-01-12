@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './form.module.scss'
+import './form.css'
 
 interface SignInProps {
   onSubmit: (name: string, email: string, password: string) => void;
@@ -16,7 +16,7 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className="form" onSubmit={handleSubmit}>
       <h1>SignIn</h1>
       <label>
         ユーザー名

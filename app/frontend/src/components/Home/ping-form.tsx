@@ -1,4 +1,5 @@
 import { useState } from "react"
+import '../SignIn/form.css'
 
 interface PingProps {
     onSubmit: (message: string) => void
@@ -13,7 +14,7 @@ const Ping: React.FC<PingProps> = ({ onSubmit }) => {
       };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className="form" onSubmit={handleSubmit}>
             <h1>疎通確認</h1>
             <label>
                 メッセージ

@@ -1,11 +1,19 @@
 import { assertExpressionStatement } from "@babel/types";
 import { Link } from "react-router-dom";
 import axios from 'axios'
-import Ping from "./form";
+import Ping from "./ping-form";
+import { useState } from "react";
 
 export const Home = () => {
+  const [msg, setMsg] = useState('')
+  const [time, setTime] = useState('')
   const handlePing = (message: string) => {
-    axios.post('http://localhost:8080/ping', {message: message});
+    axios
+      .post('http://localhost:8080/ping', {message: message})
+      .then(response => {
+        setMsg(response.data["message"]);
+        setTime(response.data["receivedTime"]);
+      });
   };
   
   return (
@@ -14,6 +22,8 @@ export const Home = () => {
       tus-record
     </h1>
     <Ping onSubmit={handlePing} />
+    <h1>メッセージ</h1>{msg}
+    <h1>受信時間</h1>{time}
     <li>
       <Link to="/sign-in">サインイン</Link>
     </li>
