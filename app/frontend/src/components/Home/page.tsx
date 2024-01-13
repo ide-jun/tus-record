@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import Ping from "./ping-form";
 import { useState } from "react";
+import { Header, Footer } from "../Utils/Common";
 
 export const Home = () => {
   const [msg, setMsg] = useState('')
@@ -18,9 +19,7 @@ export const Home = () => {
   
   return (
   <div className='App'>
-    <h1>
-      tus-record
-    </h1>
+    <Header />
     <Ping onSubmit={handlePing} />
     <h1>メッセージ</h1>{msg}
     <h1>受信時間</h1>{time}
@@ -30,6 +29,7 @@ export const Home = () => {
     <li>
       <Link to="/sign-up">サインアップ</Link>
     </li>
+    <Footer />
   </div>
   );
 }
