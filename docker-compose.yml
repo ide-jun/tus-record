@@ -26,6 +26,7 @@ services:
       - MYSQL_DATABASE=tus-record
       - DB_NAME=tus-record
       - DB_USERNAME=admin
+      - DB_PASSWORD=password
       - MYSQL_USER=admin
       - MYSQL_PASSWORD=password
       - MYSQL_ROOT_PASSWORD=password
@@ -36,7 +37,8 @@ services:
       - 8080:8080
     tty: true
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - tus-record
   db:
@@ -53,6 +55,10 @@ services:
       - TZ=${TZ}
     ports:
       - '3306:3306'
+    healthcheck:
+     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "admin", "-ppassword"]
+     timeout: 2s
+     retries: 5
     tty: true
     networks:
       - tus-record
