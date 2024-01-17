@@ -36,9 +36,16 @@ func (handler *Handler) SignUpHandler(context *gin.Context) {
 
 	err := newUser.Create(handler.DB)
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{
-			"message": "Failed to create user",
-		})
+		if err.Code == http.StatusConflict {
+			context.JSON(err.Code, gin.H{
+				"message": err.Message,
+			})
+		}
+		if err.Code == http.StatusBadRequest {
+			context.JSON(err.Code, gin.H{
+				"message": err.Message,
+			})
+		}
 		return
 	}
 

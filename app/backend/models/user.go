@@ -1,7 +1,11 @@
 package models
 
 import (
+	"backend/errors"
+	"net/http"
+
 	validation "github.com/go-ozzo/ozzo-validation"
+	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
 )
 
@@ -18,10 +22,30 @@ type SignUpInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
-func (user *User) Create(db *gorm.DB) error {
+func (user *User) Create(db *gorm.DB) *errors.MyError {
+	if result := db.Where("email = ?", user.Email).First(&User{}); result.RowsAffected != 0 {
+		return &errors.MyError{
+			Message: "already exist same email user!",
+			Code:    http.StatusConflict,
+		}
+	}
+	hashedPwd, err := bcrypt.GenerateFromPassword([]byte(user.Password), 12)
+	if err != nil {
+		return &errors.MyError{
+			Message: "internal server error!",
+			Code:    http.StatusInternalServerError,
+		}
+	}
+	user.Password = string(hashedPwd)
 	result := db.Create(&user)
+	if result.Error != nil {
+		return &errors.MyError{
+			Message: "internal server error!",
+			Code:    http.StatusInternalServerError,
+		}
+	}
 
-	return result.Error
+	return nil
 }
 
 func (user *User) Validate() error {
