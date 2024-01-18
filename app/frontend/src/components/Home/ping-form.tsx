@@ -2,24 +2,19 @@ import { useState } from "react"
 import '../SignIn/form.css'
 
 interface PingProps {
-    onSubmit: (message: string) => void
+    onSubmit: () => void
 }
 
 const Ping: React.FC<PingProps> = ({ onSubmit }) => {
-    const [message, setMessage] = useState('')
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        onSubmit(message);
+        onSubmit();
       };
 
     return (
         <form className="form" onSubmit={handleSubmit}>
             <h1>疎通確認</h1>
-            <label>
-                メッセージ
-                <input type="name" value={message} onChange={(e) => setMessage(e.target.value)} />
-            </label>
             <button type="submit">Ping</button>
         </form>
     );

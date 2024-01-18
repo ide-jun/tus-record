@@ -2,26 +2,21 @@ import React, { useState } from 'react';
 import './form.css'
 
 interface SignInProps {
-  onSubmit: (name: string, email: string, password: string) => void;
+  onSubmit: (email: string, password: string) => void;
 }
 
-const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
-  const [name,     setName]     = useState('')
+const SignInForm: React.FC<SignInProps> = ({ onSubmit }) => {
   const [email,    setEmail]    = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSubmit(name, email, password);
+    onSubmit(email, password);
   };
 
   return (
     <form className="form" onSubmit={handleSubmit}>
       <h1>SignIn</h1>
-      <label>
-        ユーザー名
-        <input type="name" value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
       <label>
         メールアドレス
         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -35,4 +30,4 @@ const SignIn: React.FC<SignInProps> = ({ onSubmit }) => {
   );
 };
 
-export default SignIn;
+export default SignInForm;
