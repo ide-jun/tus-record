@@ -22,6 +22,30 @@ type SignUpInput struct {
 	Password string `json:"password" binding:"required"`
 }
 
+type SignInInput struct {
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
+}
+
+func (user *User) CheckUser(db *gorm.DB) *errors.MyError {
+	userInDB := &User{}
+	if result := db.Where("email = ?", user.Email).First(userInDB); result.RowsAffected == 0 {
+		return &errors.MyError{
+			Message: "email or password is wrong!",
+			Code:    http.StatusUnauthorized,
+		}
+	}
+
+	if err := bcrypt.CompareHashAndPassword([]byte(userInDB.Password), []byte(user.Password)); err != nil {
+		return &errors.MyError{
+			Message: "email or password is wrong!",
+			Code:    http.StatusUnauthorized,
+		}
+	}
+
+	return nil
+}
+
 func (user *User) Create(db *gorm.DB) *errors.MyError {
 	if result := db.Where("email = ?", user.Email).First(&User{}); result.RowsAffected != 0 {
 		return &errors.MyError{

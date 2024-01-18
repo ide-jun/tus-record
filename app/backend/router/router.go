@@ -1,6 +1,7 @@
 package router
 
 import (
+	"backend/clock"
 	"backend/controllers"
 	"backend/database"
 	"time"
@@ -18,11 +19,13 @@ func setupRouter() *gin.Engine {
 	router := gin.Default()
 	setupCORS(router)
 	handler := &controllers.Handler{
-		DB: database.GetDB(),
+		DB:  database.GetDB(),
+		Clk: clock.New(),
 	}
 
 	api := router.Group("/api")
 	addAuthRouter(api, handler)
+	addPingRouter(api, handler)
 
 	return router
 }
