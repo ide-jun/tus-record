@@ -4,7 +4,9 @@ import (
 	"backend/clock"
 	"backend/models"
 	"fmt"
+	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -104,4 +106,30 @@ func (handler *Handler) SignUpHandler(context *gin.Context) {
 		"user_id": newUser.ID,
 		"message": "Successfully created user",
 	})
+}
+
+func (handler *Handler) GetUserData(context *gin.Context) {
+	token, ok := checkAuthHeader(context)
+	if !ok {
+		return
+	}
+
+	claims := token.Claims.(jwt.MapClaims)
+	// user ID を取得
+	userID, err := strconv.Atoi(claims["user"].(string))
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "missing get user id",
+		})
+	}
+	user := &models.User{}
+	fmt.Println(userID)
+	handler.DB.Where("id = ?", userID).First(user)
+
+	context.JSON(http.StatusOK, gin.H{
+		"name": user.Name,
+	})
+
+	return
+	log.Println(claims)
 }

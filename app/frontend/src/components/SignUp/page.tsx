@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Footer, Header } from "../Utils/Common";
+import { Footer, Header } from "../Utils/CommonForms";
 import SignUpForm from "./form";
 
 export const SignUpPage = () => {

@@ -20,4 +20,12 @@ const Footer = () => {
     );
 }
 
-export { Header, Footer };
+const AuthErrorForm = () => {
+    return (
+        <div className='App'>
+            <p>ログインしてください</p>
+        </div>
+    )
+}
+
+export { Header, Footer, AuthErrorForm };

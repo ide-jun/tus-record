@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios'
 import Ping from "./ping-form";
 import { useState } from "react";
-import { Header, Footer } from "../Utils/Common";
+import { Header, Footer } from "../Utils/CommonForms";
 
 export const Home = () => {
   const token = localStorage.getItem("token")

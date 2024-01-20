@@ -26,6 +26,7 @@ func setupRouter() *gin.Engine {
 	api := router.Group("/api")
 	addAuthRouter(api, handler)
 	addPingRouter(api, handler)
+	// addRecordRouter(api, handler)
 
 	return router
 }

@@ -43,6 +43,8 @@ func (user *User) CheckUser(db *gorm.DB) *errors.MyError {
 		}
 	}
 
+	user.ID = userInDB.ID
+
 	return nil
 }
 
