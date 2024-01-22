@@ -1,1 +1,3 @@
 /app/backend/tmp/
+/app/backend/go.mod
+/app/backend/go.sum
