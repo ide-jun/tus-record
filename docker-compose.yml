@@ -7,7 +7,9 @@ services:
     container_name: frontend
     tty: true
     volumes:
-      - ./app/frontend:/app/frontend
+      - ./app/frontend/src:/app/frontend/src
+      - ./app/frontend/public:/app/frontend/public
+      - ./app/frontend/tsconfig.json:/app/frontend/tsconfig.json
     ports:
       - 5173:5173
     command: sh -c 'npm start'
