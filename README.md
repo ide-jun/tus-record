@@ -14,7 +14,46 @@
 - データベース
     - MySQL
 
-## 環境構築
+## ツール環境構築
+WSL・Dockerのインストールに関しては以下の記事を参考にしています。
+https://qiita.com/nujust/items/d7cd395baa0c5dc94fc5
+### WSLインストール
+
+WSLをインストールしていない場合、`PowerShell` で以下を実行
+```PowerShell
+wsl --install -d Ubuntu
+```
+
+### Docker Engineインストール
+インストールしたWSLを起動し、以下の手順でインストール
+```Bash
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+```
+Docker Desktop for Windowsの利用推奨が表示されるが、そのまま待機していればインストールが進みます。
+
+以下を実行して実行権限をルートユーザ以外にも付与。
+```Bash
+sudo usermod -aG docker $USER
+```
+
+以下を実行して `/etc/wsl.conf` に `systemd` を有効化するオプションを記述
+```Bash
+sudo vi /etc/wsl.conf
+```
+```/etc/wsl.conf
+[boot]
+systemd=true
+```
+
+上記がすべて完了したらWSLを再起動し、以下のコマンドでdockerが実行できるかどうか確認する
+```Bash
+docker run hello-world
+```
+
+`Hello from Docker!` などのメッセージが表示されればインストールは完了
+
+## システム環境構築
 以下の流れに沿ってコマンド実行してください
 1. `git clone https://github.com/ide-jun/tus-record.git` を実行
 2. `cd tus-record` を実行
