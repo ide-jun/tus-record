@@ -30,10 +30,10 @@ all-clean:
 	docker rmi -f $$(docker images -aq)
 
 init-backend: ## docker create
-	docker create tus-record-backend
-	docker cp $$(docker ps -aq):./app/backend/go.mod ./app/backend/
-	docker cp $$(docker ps -aq):./app/backend/go.sum ./app/backend/
-	docker rm -f $$(docker ps -aq)
+	$(eval CONTAINER_NAME := $(shell docker create tus-record-backend))
+	docker cp $(CONTAINER_NAME):./app/backend/go.mod ./app/backend/
+	docker cp $(CONTAINER_NAME):./app/backend/go.sum ./app/backend/
+	docker rm -f $(CONTAINER_NAME)
 
 help: ## Show options
 	@echo "Usage: make [target]"
