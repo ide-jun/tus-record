@@ -7,9 +7,12 @@ services:
     container_name: frontend
     tty: true
     volumes:
-      - ./app/frontend:/app/frontend
+      - ./app/frontend/src:/app/frontend/src
+      - ./app/frontend/public:/app/frontend/public
+      - ./app/frontend/tsconfig.json:/app/frontend/tsconfig.json
     ports:
       - 5173:5173
+    command: sh -c 'npm start'
     networks:
       - tus-record
   backend:
@@ -19,11 +22,25 @@ services:
       context: .
       dockerfile: ./docker/backend/Dockerfile
     container_name: backend
+    environment:
+      - PORT = 8080
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_DATABASE=tus-record
+      - DB_NAME=tus-record
+      - DB_USERNAME=admin
+      - DB_PASSWORD=password
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=password
+      - MYSQL_ROOT_PASSWORD=password
+      - DB_HOST=db
+      - DB_PORT=3306
+      - TZ=Asia/Tokyo
     ports:
       - 8080:8080
     tty: true
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - tus-record
   db:
@@ -34,12 +51,16 @@ services:
     environment:
       - MYSQL_ROOT_HOST=${DB_ROOT_HOST}
       - MYSQL_DATABASE=${DB_NAME}
-      - MYSQL_USER=${DB_USER}
-      - MYSQL_PASSWORD=${DB_PASS}
-      - MYSQL_ROOT_PASSWORD=${DB_PASS}
+      - MYSQL_USER=${DB_USERNAME}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
       - TZ=${TZ}
     ports:
       - '3306:3306'
+    healthcheck:
+     test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "admin", "-ppassword"]
+     timeout: 2s
+     retries: 5
     tty: true
     networks:
       - tus-record
