@@ -25,6 +25,16 @@ clean: ## clean docker container and images
 	docker rm -f $(CONTAINERS)
 	docker rmi -f $(addprefix $(REPOSITORY)-, $(CONTAINERS))
 
+all-clean:
+	docker rm -f $$(docker ps -aq)
+	docker rmi -f $$(docker images -aq)
+
+init-backend: ## docker create
+	docker create tus-record-backend
+	docker cp $$(docker ps -aq):./app/backend/go.mod ./app/backend/
+	docker cp $$(docker ps -aq):./app/backend/go.sum ./app/backend/
+	docker rm -f $$(docker ps -aq)
+
 help: ## Show options
 	@echo "Usage: make [target]"
 	@echo ""

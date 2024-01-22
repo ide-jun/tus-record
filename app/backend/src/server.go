@@ -1,11 +1,12 @@
 package main
 
 import (
-	"backend/config"
-	"backend/database"
-	"backend/router"
 	"log"
 	"time"
+
+	"github.com/ide-jun/tus-record/src/config"
+	"github.com/ide-jun/tus-record/src/database"
+	"github.com/ide-jun/tus-record/src/router"
 )
 
 const (

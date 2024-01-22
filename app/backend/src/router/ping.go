@@ -1,7 +1,7 @@
 package router
 
 import (
-	"backend/controllers"
+	"github.com/ide-jun/tus-record/src/controllers"
 
 	"github.com/gin-gonic/gin"
 )

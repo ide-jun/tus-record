@@ -1,10 +1,11 @@
 package router
 
 import (
-	"backend/clock"
-	"backend/controllers"
-	"backend/database"
 	"time"
+
+	"github.com/ide-jun/tus-record/src/clock"
+	"github.com/ide-jun/tus-record/src/controllers"
+	"github.com/ide-jun/tus-record/src/database"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"

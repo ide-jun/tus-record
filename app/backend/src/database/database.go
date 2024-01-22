@@ -1,8 +1,9 @@
 package database
 
 import (
-	"backend/models"
 	"fmt"
+
+	"github.com/ide-jun/tus-record/src/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

@@ -1,8 +1,9 @@
 package models
 
 import (
-	"backend/errors"
 	"net/http"
+
+	"github.com/ide-jun/tus-record/src/errors"
 
 	validation "github.com/go-ozzo/ozzo-validation"
 	"golang.org/x/crypto/bcrypt"

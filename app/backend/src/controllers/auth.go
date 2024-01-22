@@ -1,13 +1,13 @@
 package controllers
 
 import (
-	"backend/clock"
-	"backend/models"
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/ide-jun/tus-record/src/clock"
+	"github.com/ide-jun/tus-record/src/models"
 
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
@@ -131,5 +131,4 @@ func (handler *Handler) GetUserData(context *gin.Context) {
 	})
 
 	return
-	log.Println(claims)
 }
