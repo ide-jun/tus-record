@@ -27,6 +27,8 @@ ps: ## Check Containers status
 clean: ## clean docker container and images
 	docker rm -f $(CONTAINERS)
 	docker rmi -f $(addprefix $(REPOSITORY)-, $(CONTAINERS))
+	rm -rf app/backend/go.mod
+	rm -rf app/backend/go.sum
 
 all-clean:
 	docker rm -f $$(docker ps -aq)
