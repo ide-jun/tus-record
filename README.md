@@ -58,9 +58,10 @@ docker run hello-world
 1. `git clone https://github.com/ide-jun/tus-record.git` を実行
 2. `cd tus-record` を実行
 3. `make build` を実行。イメージが作成されます。
-4. `make init-backend` を実行。各マシンで1度のみの実行です。
-5. `make up` を実行。コンテナが立ち上がります。バックエンドのコンテナは、データベースのコンテナが立ち上がるのを待つため、完了するまでに少し時間がかかります。
-6. `make ps` を実行する。
+4. `make create-network` を実行。
+5. `make init-backend` を実行。各マシンで1度のみの実行です。
+6. `make up` を実行。コンテナが立ち上がります。バックエンドのコンテナは、データベースのコンテナが立ち上がるのを待つため、完了するまでに少し時間がかかります。
+7. `make ps` を実行する。
 
 フロントエンド・バックエンド・データベースのコンテナの`STATUS`がすべて`UP`になっていれば環境構築は完了です。
 

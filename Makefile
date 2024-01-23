@@ -6,6 +6,9 @@ CONTAINERS := backend frontend db
 build: ## docker compose build
 	docker compose build
 
+create-network:
+	docker network create tus-record
+
 up: ## Do docker compose up with hot reload
 	docker compose up -d
 
