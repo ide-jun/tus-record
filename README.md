@@ -53,6 +53,13 @@ docker run hello-world
 
 `Hello from Docker!` などのメッセージが表示されればインストールは完了
 
+### makeのインストール
+本プロジェクトでは `Makefile` を用いています。
+wslでmakeをインストールしてください。
+```Bash
+sudo apt install make
+```
+
 ## システム環境構築
 以下の流れに沿ってコマンド実行してください
 1. `git clone https://github.com/ide-jun/tus-record.git` を実行
